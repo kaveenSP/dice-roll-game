@@ -19,7 +19,7 @@
 
     <Button
         android:id="@+id/newGame"
-        android:layout_width="wrap_content"
+        android:layout_width="266dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:layout_marginBottom="44dp"
@@ -51,10 +51,10 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="76dp"
+        android:layout_width="250dp"
+        android:layout_height="128dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="80dp"
         android:fontFamily="@font/aclonica"
         android:text="@string/the_dice_game"
         android:textAlignment="center"

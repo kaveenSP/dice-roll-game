@@ -218,10 +218,10 @@
 
     <TextView
         android:id="@+id/human_score"
-        android:layout_width="13dp"
-        android:layout_height="24dp"
+        android:layout_width="63dp"
+        android:layout_height="23dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginEnd="14dp"
         android:text="0"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -230,9 +230,9 @@
 
     <TextView
         android:id="@+id/computer_score"
-        android:layout_width="15dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="62dp"
+        android:layout_width="63dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="14dp"
         android:text="0"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -252,7 +252,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/closeGameScreen"
+        android:id="@+id/close_game_screen"
         android:layout_width="120dp"
         android:layout_height="55dp"
         android:layout_marginStart="145dp"

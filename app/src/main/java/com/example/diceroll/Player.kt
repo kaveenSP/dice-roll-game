@@ -1,13 +1,15 @@
 package com.example.diceroll
 
-class Player() : Game() {
-    var score : Int = 0
+import android.util.Log
 
-    fun addScore(diceScores : Array<Int>){
+open class Player : Game() {
+    var score:Int = 0
+
+    fun addScore(diceValues : IntArray){
         var totalDieScore = 0
-        for (dieScore in diceScores) {
+        for (dieScore in diceValues) {
             totalDieScore += dieScore
         }
-        score += totalDieScore
+        this.score += totalDieScore
     }
 }

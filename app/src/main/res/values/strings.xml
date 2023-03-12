@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DiceRoll</string>
+    <string name="app_name">Dice Roll</string>
     <string name="new_game">New Game</string>
     <string name="about">About</string>
     <string name="the_dice_game">The Dice \nGame</string>

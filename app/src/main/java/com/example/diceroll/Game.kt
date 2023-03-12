@@ -9,10 +9,10 @@ open class Game {
 
     var computerScore:Int = 0
 
-    fun generateRandomIntegers(n: Int): Array<Int> {
-        val result = Array(n) { 0 }
-        for (i in 0 until n) {
-            result[i] = (1..6).random()
+    fun generateRandomIntegers(diceCount: Int): IntArray {
+        val result = IntArray(diceCount)
+        for (i in 0 until diceCount) {
+            result[i] = Random.nextInt(1,6+1)
         }
         return result
     }
