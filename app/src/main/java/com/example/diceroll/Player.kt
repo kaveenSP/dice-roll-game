@@ -5,7 +5,7 @@ import android.util.Log
 open class Player : Game() {
     var score:Int = 0
 
-    fun addScore(diceValues : IntArray){
+    fun addScore(diceValues : MutableList<Int>){
         var totalDieScore = 0
         for (dieScore in diceValues) {
             totalDieScore += dieScore

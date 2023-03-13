@@ -13,27 +13,31 @@
         android:layout_height="80dp"
         android:layout_marginStart="68dp"
         android:layout_marginTop="8dp"
+        android:tag="h5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hd_4"
-        app:srcCompat="@drawable/die_face_5" />
+        app:srcCompat="@drawable/dieface_5" />
 
     <ImageView
         android:id="@+id/hd_1"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="68dp"
+        android:tag="h1"
+        android:tooltipText="hhh"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:srcCompat="@drawable/die_face_1" />
+        app:srcCompat="@drawable/dieface_1" />
 
     <ImageView
         android:id="@+id/cd_1"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginEnd="68dp"
+        android:tag="c1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7"
-        app:srcCompat="@drawable/die_face_1" />
+        app:srcCompat="@drawable/dieface_1" />
 
     <ImageView
         android:id="@+id/hd_3"
@@ -41,9 +45,10 @@
         android:layout_height="80dp"
         android:layout_marginStart="68dp"
         android:layout_marginTop="7dp"
+        android:tag="h3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hd_2"
-        app:srcCompat="@drawable/die_face_3" />
+        app:srcCompat="@drawable/dieface_3" />
 
     <ImageView
         android:id="@+id/cd_3"
@@ -51,9 +56,10 @@
         android:layout_height="80dp"
         android:layout_marginTop="7dp"
         android:layout_marginEnd="68dp"
+        android:tag="c3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cd_2"
-        app:srcCompat="@drawable/die_face_3" />
+        app:srcCompat="@drawable/dieface_3" />
 
     <ImageView
         android:id="@+id/hd_2"
@@ -61,9 +67,10 @@
         android:layout_height="80dp"
         android:layout_marginStart="68dp"
         android:layout_marginTop="7dp"
+        android:tag="h2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hd_1"
-        app:srcCompat="@drawable/die_face_2" />
+        app:srcCompat="@drawable/dieface_2" />
 
     <ImageView
         android:id="@+id/cd_2"
@@ -71,9 +78,10 @@
         android:layout_height="80dp"
         android:layout_marginTop="7dp"
         android:layout_marginEnd="68dp"
+        android:tag="c2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cd_1"
-        app:srcCompat="@drawable/die_face_2" />
+        app:srcCompat="@drawable/dieface_2" />
 
     <Button
         android:id="@+id/throwDice"
@@ -107,9 +115,10 @@
         android:layout_height="80dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="68dp"
+        android:tag="c4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cd_3"
-        app:srcCompat="@drawable/die_face_4" />
+        app:srcCompat="@drawable/dieface_4" />
 
     <ImageView
         android:id="@+id/hd_4"
@@ -117,9 +126,10 @@
         android:layout_height="80dp"
         android:layout_marginStart="68dp"
         android:layout_marginTop="5dp"
+        android:tag="h4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hd_3"
-        app:srcCompat="@drawable/die_face_4" />
+        app:srcCompat="@drawable/dieface_4" />
 
     <ImageView
         android:id="@+id/cd_5"
@@ -129,7 +139,7 @@
         android:layout_marginEnd="68dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cd_4"
-        app:srcCompat="@drawable/die_face_5" />
+        app:srcCompat="@drawable/dieface_5" />
 
     <TextView
         android:id="@+id/textView6"
