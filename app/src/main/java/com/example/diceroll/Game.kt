@@ -7,12 +7,10 @@ open class Game {
     var humanWins:Int = 0
     var computerWins:Int = 0
 
-    var computerScore:Int = 0
-
-    fun generateRandomIntegers(diceCount: Int): IntArray {
-        val result = IntArray(diceCount)
+    fun generateRandomIntegers(diceCount: Int): MutableList<Int> {
+        val result = mutableListOf<Int>()
         for (i in 0 until diceCount) {
-            result[i] = Random.nextInt(1,6+1)
+            result.add(Random.nextInt(1,6+1))
         }
         return result
     }
