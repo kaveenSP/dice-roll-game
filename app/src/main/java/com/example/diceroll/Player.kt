@@ -1,8 +1,6 @@
 package com.example.diceroll
 
-import android.util.Log
-
-open class Player : Game() {
+open class Player : GameActivity() {
     var score:Int = 0
 
     fun addScore(diceValues : MutableList<Int>){

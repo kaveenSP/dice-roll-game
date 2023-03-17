@@ -7,34 +7,23 @@
     android:background="@drawable/round_popup"
     android:padding="20dp">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="245dp"
-        android:layout_height="212dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/myself" />
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="20dp"
         android:text="Name : Kaveen Premachandra"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        tools:layout_editor_absoluteY="16dp" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:text="Student ID : 20210557"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -45,8 +34,8 @@
         android:id="@+id/textView5"
         android:layout_width="358dp"
         android:layout_height="104dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
         android:text="I confirm that I understand what plagiarism is and have read and understood the section on Assessment Offences in the Essential Information for Students. The work that I have submitted is entirely my own. Any work from other authors is duly referenced and acknowledged."
         android:textAlignment="center"
         android:textColor="#000000"

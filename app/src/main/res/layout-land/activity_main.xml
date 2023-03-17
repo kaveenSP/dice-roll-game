@@ -21,8 +21,8 @@
         android:id="@+id/newGame"
         android:layout_width="266dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="74dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginStart="404dp"
+        android:layout_marginBottom="40dp"
         android:height="55dp"
         android:background="@drawable/round_button"
         android:paddingStart="80dp"
@@ -37,8 +37,8 @@
         android:id="@+id/about"
         android:layout_width="266dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="74dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginStart="404dp"
+        android:layout_marginBottom="84dp"
         android:height="55dp"
         android:background="@drawable/round_button"
         android:paddingStart="80dp"
@@ -49,12 +49,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/htp"
+        android:layout_width="266dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="404dp"
+        android:layout_marginBottom="36dp"
+        android:height="55dp"
+        android:background="@drawable/round_button"
+        android:text="how to play"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/about"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="300dp"
         android:layout_height="167dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="120dp"
         android:fontFamily="@font/skranji_bold"
         android:shadowColor="#00BCD4"
         android:shadowDx="20"
@@ -67,17 +81,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/htp"
-        android:layout_width="266dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="74dp"
-        android:layout_marginBottom="32dp"
-        android:height="55dp"
-        android:background="@drawable/round_button"
-        android:text="how to play"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/about"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
