@@ -51,15 +51,19 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="250dp"
-        android:layout_height="128dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="80dp"
+        android:layout_width="300dp"
+        android:layout_height="167dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="72dp"
         android:fontFamily="@font/aclonica"
+        android:shadowColor="#000000"
+        android:shadowDx="20"
+        android:shadowDy="20"
+        android:shadowRadius="30"
         android:text="@string/the_dice_game"
         android:textAlignment="center"
-        android:textColor="#0B4686"
-        android:textSize="54sp"
+        android:textColor="#FFFFFF"
+        android:textSize="60sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

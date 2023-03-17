@@ -14,27 +14,32 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import kotlin.properties.Delegates
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
-    private var game = Game()
-    private var humanPlayer = Player()
-    private var computerPlayer = Player()
+    private lateinit var game: Game
+    private lateinit var humanPlayer: Player
+    private lateinit var computerPlayer: Player
     private val delayTime = 20
     private val rollAnimationCount = 40
     private val rollCountPerPlayer = 3
-    private var hRollNumber = 1
-    private var cRollNumber = 1
-    private var humanDice = mutableListOf<Int>()
-    private var computerDice = mutableListOf<Int>()
+    private var hRollNumber by Delegates.notNull<Int>()
+    private var cRollNumber by Delegates.notNull<Int>()
+    private lateinit var humanDice: MutableList<Int>
+    private lateinit var computerDice: MutableList<Int>
     private val diceImages = intArrayOf(R.drawable.dieface_1, R.drawable.dieface_2, R.drawable.dieface_3, R.drawable.dieface_4, R.drawable.dieface_5, R.drawable.dieface_6)
-    private val hDiceImageViews = mutableListOf<ImageView>()
-    private val cDiceImageViews = mutableListOf<ImageView>()
-    private var hNotSelectedImageViews = mutableListOf<ImageView>()
-    private var cNotSelectedImageViews = mutableListOf<ImageView>()
-    private var hSelectedDieScores = mutableListOf<Int>()
-    private var cSelectedDieScores = mutableListOf<Int>()
+    private lateinit var hDiceImageViews: MutableList<ImageView>
+    private lateinit var cDiceImageViews: MutableList<ImageView>
+    private lateinit var hNotSelectedImageViews: MutableList<ImageView>
+    private lateinit var cNotSelectedImageViews: MutableList<ImageView>
+    private lateinit var hSelectedDieScores: MutableList<Int>
+    private lateinit var cSelectedDieScores: MutableList<Int>
+    private lateinit var humanScore:TextView
+    private lateinit var computerScore:TextView
+    private lateinit var humanWins:TextView
+    private lateinit var computerWins:TextView
     private lateinit var hDie01:ImageView
     private lateinit var hDie02:ImageView
     private lateinit var hDie03:ImageView
@@ -87,6 +92,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         startGameButton.setOnClickListener {
+            game = Game()
+            humanPlayer = Player()
+            computerPlayer = Player()
+            hRollNumber = 1
+            cRollNumber = 1
+            humanDice = mutableListOf()
+            computerDice = mutableListOf()
+            hDiceImageViews = mutableListOf()
+            cDiceImageViews = mutableListOf()
+            hNotSelectedImageViews = mutableListOf()
+            cNotSelectedImageViews = mutableListOf()
+            hSelectedDieScores = mutableListOf()
+            cSelectedDieScores = mutableListOf()
             try {
                 game.winningScore = Integer.parseInt(scoreText.text.toString())
             } catch (e : java.lang.NumberFormatException) {
@@ -105,14 +123,19 @@ class MainActivity : AppCompatActivity() {
                 true
             )
 
-            val humanScore = gameView.findViewById<TextView>(R.id.human_score)
-            val computerScore = gameView.findViewById<TextView>(R.id.computer_score)
             val throwButton = gameView.findViewById<Button>(R.id.throwDice)
             val scoreButton = gameView.findViewById<Button>(R.id.score)
             val closeGameScreen = gameView.findViewById<Button>(R.id.close_game_screen)
 
-            var diceThrown = false
-            var gameStarted = false
+            scoreButton.isEnabled = false
+
+            val delayMillis: Long = 1000
+
+            humanWins= gameView.findViewById(R.id.human_wins)
+            computerWins = gameView.findViewById(R.id.computer_wins)
+            humanScore = gameView.findViewById(R.id.human_score)
+            computerScore = gameView.findViewById(R.id.computer_score)
+            val roll = gameView.findViewById<TextView>(R.id.roll)
 
             hDie01 = gameView.findViewById(R.id.hd_1)
             hDie02 = gameView.findViewById(R.id.hd_2)
@@ -129,7 +152,6 @@ class MainActivity : AppCompatActivity() {
             cDiceImageViews.addAll(mutableListOf(cDie01,cDie02,cDie03,cDie04,cDie05))
 
             throwButton.setOnClickListener {
-                gameStarted = true
                 when(hRollNumber) {
                     1 -> {
                         hSelectedDieScores = mutableListOf()
@@ -142,7 +164,8 @@ class MainActivity : AppCompatActivity() {
                         rollDice(hDiceImageViews.size,cDiceImageViews.size)
                         hRollNumber += 1
                         cRollNumber += 1
-
+                        scoreButton.isEnabled = true
+                        roll.text = hRollNumber.toString()
                     }
                     2 -> {
                         for(i in 0 until hDiceImageViews.size) {
@@ -158,10 +181,10 @@ class MainActivity : AppCompatActivity() {
                                 val imageView = iter.next()
                                 if (!imageView.isSelected) {
                                     iter.remove()
-                                } else {
-
                                 }
                             }
+                        } else {
+                            cNotSelectedImageViews = mutableListOf()
                         }
                         rollDice(hNotSelectedImageViews.size,cNotSelectedImageViews.size)
                         for(i in 0 until hDiceImageViews.size) {
@@ -173,6 +196,7 @@ class MainActivity : AppCompatActivity() {
 
                         hRollNumber += 1
                         cRollNumber += 1
+                        roll.text = hRollNumber.toString()
                     }
                     3 -> {
                         for(i in 0 until hDiceImageViews.size) {
@@ -190,6 +214,8 @@ class MainActivity : AppCompatActivity() {
                                     iter.remove()
                                 }
                             }
+                        } else {
+                            cNotSelectedImageViews = mutableListOf()
                         }
                         rollDice(hNotSelectedImageViews.size,cNotSelectedImageViews.size)
                         for(i in 0 until hDiceImageViews.size) {
@@ -202,24 +228,43 @@ class MainActivity : AppCompatActivity() {
                         computerPlayer.addScore(cSelectedDieScores)
                         humanScore.text = humanPlayer.score.toString()
                         computerScore.text = computerPlayer.score.toString()
-                        if(humanPlayer.score >= game.winningScore) {
-
-                        } else if(computerPlayer.score >= game.winningScore) {
-
-                        }
                         hRollNumber = 1
                         cRollNumber = 1
+                        roll.text = hRollNumber.toString()
+                        scoreButton.isEnabled = false
+                        if (humanPlayer.score == computerPlayer.score) {
+                            while (humanPlayer.score != computerPlayer.score) {
+                                rollDice(hDiceImageViews.size, cDiceImageViews.size)
+                                humanPlayer.addScore(hSelectedDieScores)
+                                humanScore.text = humanPlayer.score.toString()
+                                computerPlayer.addScore(cSelectedDieScores)
+                                computerScore.text = computerPlayer.score.toString()
+                            }
+                        }
+                        if (humanPlayer.score >= game.winningScore && humanPlayer.score > computerPlayer.score) {
+                            game.humanWins += 1
+                            humanWins.text = game.humanWins.toString()
+                            humanPlayer.score = 0
+                            humanScore.text = humanPlayer.score.toString()
+                            showWinScreen("You Won", true)
+                        } else if (computerPlayer.score >= game.winningScore && humanPlayer.score < computerPlayer.score) {
+                            game.computerWins += 1
+                            computerWins.text = game.computerWins.toString()
+                            computerPlayer.computerWins = 0
+                            computerScore.text = computerPlayer.score.toString()
+                            showWinScreen("You Lose", false)
+                        }
                     }
                 }
-                diceThrown = true
             }
 
             scoreButton.setOnClickListener {
+                scoreButton.isEnabled = false
                 hNotSelectedImageViews = mutableListOf()
-                if(diceThrown && gameStarted && hRollNumber != 3) {
-                    humanPlayer.addScore(hSelectedDieScores)
-                    humanScore.text = humanPlayer.score.toString()
-                }
+//                if(diceThrown && gameStarted && hRollNumber != 3) {
+//                    humanPlayer.addScore(hSelectedDieScores)
+//                    humanScore.text = humanPlayer.score.toString()
+//                }
                 for(i in 0 until rollCountPerPlayer - cRollNumber) {
                     val iter = cNotSelectedImageViews.listIterator()
                     while (iter.hasNext()) {
@@ -230,25 +275,42 @@ class MainActivity : AppCompatActivity() {
                     }
                     rollDice(0, cNotSelectedImageViews.size)
                 }
-                val delayMillis: Long = 1000
                 val handler = Handler(Looper.getMainLooper())
                 handler.postDelayed({
+                    humanPlayer.addScore(hSelectedDieScores)
+                    humanScore.text = humanPlayer.score.toString()
                     computerPlayer.addScore(cSelectedDieScores)
                     computerScore.text = computerPlayer.score.toString()
+                    if (humanPlayer.score == computerPlayer.score) {
+                        while (humanPlayer.score != computerPlayer.score) {
+                            rollDice(hDiceImageViews.size, cDiceImageViews.size)
+                            humanPlayer.addScore(hSelectedDieScores)
+                            humanScore.text = humanPlayer.score.toString()
+                            computerPlayer.addScore(cSelectedDieScores)
+                            computerScore.text = computerPlayer.score.toString()
+                        }
+                    }
+                    if (humanPlayer.score >= game.winningScore && humanPlayer.score > computerPlayer.score) {
+                        game.humanWins += 1
+                        humanWins.text = game.humanWins.toString()
+                        humanPlayer.score = 0
+                        humanScore.text = humanPlayer.score.toString()
+                        showWinScreen("You Won", true)
+                    } else if (computerPlayer.score >= game.winningScore && humanPlayer.score < computerPlayer.score) {
+                        game.computerWins += 1
+                        computerWins.text = game.computerWins.toString()
+                        computerPlayer.computerWins = 0
+                        computerScore.text = computerPlayer.score.toString()
+                        showWinScreen("You Lose", false)
+                    }
+
                 }, delayMillis)
-
-                if(humanPlayer.score >= game.winningScore) {
-
-                } else if(computerPlayer.score >= game.winningScore) {
-
-                }
-                diceThrown = false
                 hRollNumber = 1
                 cRollNumber = 1
+                roll.text = hRollNumber.toString()
             }
 
             closeGameScreen.setOnClickListener {
-                gameStarted = false
                 gameWindow.dismiss()
             }
 
@@ -302,8 +364,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-
             gameWindow.showAtLocation(gameView, Gravity.NO_GRAVITY, 0, 0)
+            showHowToPlay()
         }
 
         // Show the popup window
@@ -335,6 +397,69 @@ class MainActivity : AppCompatActivity() {
 
         // Show the popup window
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0)
+    }
+
+    @SuppressLint("MissingInflatedId")
+    private fun showWinScreen(text:String, won:Boolean) {
+        // Inflate the popup_layout.xml file
+        val winView = layoutInflater.inflate(R.layout.win_screen, null)
+
+        // Create a PopupWindow object
+        val winWindow = PopupWindow(
+            winView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        val closeButtonWinScreen = winView.findViewById<Button>(R.id.close_win_screen)
+        val winText = winView.findViewById<TextView>(R.id.win_text)
+
+        winText.text = text
+        if (won) {
+            winText.setTextColor(Color.GREEN)
+        } else {
+            winText.setTextColor(Color.RED)
+        }
+
+
+        // Set a click listener for the close button
+        closeButtonWinScreen.setOnClickListener {
+            // Dismiss the popup window
+            humanPlayer.score = 0
+            humanScore.text = humanPlayer.score.toString()
+            computerPlayer.score = 0
+            computerScore.text = computerPlayer.score.toString()
+            winWindow.dismiss()
+        }
+
+        // Show the popup window
+        winWindow.showAtLocation(winView, Gravity.CENTER, 0, 0)
+    }
+
+    @SuppressLint("MissingInflatedId")
+    private fun showHowToPlay() {
+        // Inflate the popup_layout.xml file
+        val howToPlayView = layoutInflater.inflate(R.layout.how_to_play, null)
+
+        // Create a PopupWindow object
+        val howToPlayWindow = PopupWindow(
+            howToPlayView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        val closeButtonHTP = howToPlayView.findViewById<Button>(R.id.close_howtoplay)
+
+        // Set a click listener for the close button
+        closeButtonHTP.setOnClickListener {
+            // Dismiss the popup window
+            howToPlayWindow.dismiss()
+        }
+
+        // Show the popup window
+        howToPlayWindow.showAtLocation(howToPlayView, Gravity.CENTER, 0, 0)
     }
 
     private fun rollDice(hDiceCount:Int, cDiceCount:Int) {
