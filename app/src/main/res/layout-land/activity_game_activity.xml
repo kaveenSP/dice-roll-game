@@ -254,7 +254,7 @@
         android:layout_width="120dp"
         android:layout_height="55dp"
         android:layout_marginStart="164dp"
-        android:layout_marginBottom="23dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/round_button"
         android:text="Close"
         android:textColor="#FFFFFF"
@@ -263,24 +263,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/throwDice"
-        android:layout_width="120dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginBottom="23dp"
-        android:background="@drawable/round_button"
-        android:text="Throw"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/close_game_screen" />
-
-    <Button
         android:id="@+id/score"
         android:layout_width="120dp"
         android:layout_height="55dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginBottom="23dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/round_button"
         android:text="Score"
         android:textColor="#FFFFFF"
@@ -288,13 +275,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/throwDice" />
 
+    <Button
+        android:id="@+id/throwDice"
+        android:layout_width="120dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/round_button"
+        android:text="Throw"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/close_game_screen" />
+
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="270dp"
+        android:layout_marginStart="250dp"
         android:layout_marginTop="10dp"
-        android:text="Roll :"
+        android:text="Next Roll :"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"

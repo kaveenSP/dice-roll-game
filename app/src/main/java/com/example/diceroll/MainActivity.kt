@@ -8,12 +8,14 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupWindow
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
     companion object {
         const val WINNING_SCORE = "com.example.application.example.WINNING_SCORE"
+        const val GAME_MODE = "com.example.application.example.GAME_MODE"
     }
 
     @SuppressLint("MissingInflatedId")
@@ -36,7 +38,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("MissingInflatedId", "UseCompatLoadingForDrawables")
+    @SuppressLint("MissingInflatedId", "UseCompatLoadingForDrawables",
+        "UseSwitchCompatOrMaterialCode"
+    )
     private fun showChangeScorePopup() {
         // Inflate the popup_layout.xml file
         val scorePopupView = layoutInflater.inflate(R.layout.change_score, null)
@@ -53,11 +57,17 @@ class MainActivity : AppCompatActivity() {
         val scoreText = scorePopupView.findViewById<TextInputEditText>(R.id.current_game_score)
         val closeButton = scorePopupView.findViewById<Button>(R.id.cancel_button)
         val startGameButton = scorePopupView.findViewById<Button>(R.id.start_game)
+        val gameModeSwitch = scorePopupView.findViewById<Switch>(R.id.game_mode)
 
         // Set a click listener for the close button
         closeButton.setOnClickListener {
             // Dismiss the popup window
             scorePopupWindow.dismiss()
+        }
+
+        var gameMode = "easy"
+        gameModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            gameMode = if (isChecked) "hard" else "easy"
         }
 
         startGameButton.setOnClickListener {
@@ -67,8 +77,10 @@ class MainActivity : AppCompatActivity() {
             } catch (e : java.lang.NumberFormatException) {
                 e.printStackTrace()
             }
+
             val gameActivityIntent = Intent(this, GameActivity::class.java)
             gameActivityIntent.putExtra(WINNING_SCORE, winningScore)
+            gameActivityIntent.putExtra(GAME_MODE, gameMode)
             startActivity(gameActivityIntent)
             scorePopupWindow.dismiss()
         }

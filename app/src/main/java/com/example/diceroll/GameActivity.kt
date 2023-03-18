@@ -1,6 +1,8 @@
 package com.example.diceroll
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +21,7 @@ import kotlin.random.Random
 open class GameActivity : AppCompatActivity() {
 
     private var winningScore : Int = 101
+    private var gameMode = "easy"
     private var humanWins:Int = 0
     private var computerWins:Int = 0
     private lateinit var humanPlayer: Player
@@ -41,6 +44,13 @@ open class GameActivity : AppCompatActivity() {
     private lateinit var computerScore: TextView
     private lateinit var tvHumanWins: TextView
     private lateinit var tvComputerWins: TextView
+    private lateinit var throwButton: Button
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,13 +70,15 @@ open class GameActivity : AppCompatActivity() {
         hSelectedDieScores = mutableListOf()
         cSelectedDieScores = mutableListOf()
 
-        val throwButton = findViewById<Button>(R.id.throwDice)
         val scoreButton = findViewById<Button>(R.id.score)
         val closeGameScreen = findViewById<Button>(R.id.close_game_screen)
         val wScoreView = findViewById<TextView>(R.id.w_score)
+        throwButton = findViewById(R.id.throwDice)
         val delayMillis: Long = 1000
 
         winningScore = intent.getIntExtra(MainActivity.WINNING_SCORE, 0)
+        gameMode = intent.getStringExtra(MainActivity.GAME_MODE).toString()
+        Log.d("mode", gameMode)
         wScoreView.text = winningScore.toString()
 
         scoreButton.isEnabled = false
@@ -76,6 +88,10 @@ open class GameActivity : AppCompatActivity() {
         humanScore = findViewById(R.id.human_score)
         computerScore = findViewById(R.id.computer_score)
         val roll = findViewById<TextView>(R.id.roll)
+
+        val totalWins = getPreferences(Context.MODE_PRIVATE) ?: return
+        tvComputerWins.text = (totalWins.getInt("COMPUTER-SCORE", 0).toString())
+        tvHumanWins.text = (totalWins.getInt("HUMAN-SCORE", 0).toString())
 
         hDiceImageViews.addAll(mutableListOf(findViewById(R.id.hd_1),findViewById(R.id.hd_2),findViewById(R.id.hd_3),findViewById(R.id.hd_4),findViewById(R.id.hd_5)))
         cDiceImageViews.addAll(mutableListOf(findViewById(R.id.cd_1),findViewById(R.id.cd_2),findViewById(R.id.cd_3),findViewById(R.id.cd_4),findViewById(R.id.cd_5)))
@@ -115,9 +131,21 @@ open class GameActivity : AppCompatActivity() {
                             hNotSelectedImageViews.add(hDiceImageViews[i])
                         }
                     }
-                    val cRollTaken = Random.nextBoolean()
-                    Log.d("Computer Roll Taken", cRollTaken.toString())
-                    if (cRollTaken) {
+                    if (gameMode == "easy") {
+                        val cRollTaken = Random.nextBoolean()
+                        Log.d("Computer Roll Taken", cRollTaken.toString())
+                        if (cRollTaken) {
+                            val iter = cNotSelectedImageViews.listIterator()
+                            while (iter.hasNext()) {
+                                val imageView = iter.next()
+                                if (!imageView.isSelected) {
+                                    iter.remove()
+                                }
+                            }
+                        } else {
+                            cNotSelectedImageViews = mutableListOf()
+                        }
+                    } else {
                         val iter = cNotSelectedImageViews.listIterator()
                         while (iter.hasNext()) {
                             val imageView = iter.next()
@@ -125,8 +153,7 @@ open class GameActivity : AppCompatActivity() {
                                 iter.remove()
                             }
                         }
-                    } else {
-                        cNotSelectedImageViews = mutableListOf()
+
                     }
                     rollDice(hNotSelectedImageViews.size,cNotSelectedImageViews.size)
                     for(i in 0 until hDiceImageViews.size) {
@@ -146,9 +173,21 @@ open class GameActivity : AppCompatActivity() {
                             hNotSelectedImageViews.add(hDiceImageViews[i])
                         }
                     }
-                    val cRollTaken = Random.nextBoolean()
-                    Log.d("Computer Roll Taken", cRollTaken.toString())
-                    if (cRollTaken) {
+                    if (gameMode == "easy") {
+                        val cRollTaken = Random.nextBoolean()
+                        Log.d("Computer Roll Taken", cRollTaken.toString())
+                        if (cRollTaken) {
+                            val iter = cNotSelectedImageViews.listIterator()
+                            while (iter.hasNext()) {
+                                val imageView = iter.next()
+                                if (!imageView.isSelected) {
+                                    iter.remove()
+                                }
+                            }
+                        } else {
+                            cNotSelectedImageViews = mutableListOf()
+                        }
+                    } else {
                         val iter = cNotSelectedImageViews.listIterator()
                         while (iter.hasNext()) {
                             val imageView = iter.next()
@@ -156,8 +195,6 @@ open class GameActivity : AppCompatActivity() {
                                 iter.remove()
                             }
                         }
-                    } else {
-                        cNotSelectedImageViews = mutableListOf()
                     }
                     rollDice(hNotSelectedImageViews.size,cNotSelectedImageViews.size)
                     for(i in 0 until hDiceImageViews.size) {
@@ -186,8 +223,6 @@ open class GameActivity : AppCompatActivity() {
                         } else if (computerPlayer.score >= winningScore && humanPlayer.score < computerPlayer.score) {
                             computerWins += 1
                             tvComputerWins.text = computerWins.toString()
-                            computerPlayer.score = 0
-                            computerScore.text = computerPlayer.score.toString()
                             showWinScreen("You Lose", false)
                         }
                         humanPlayer.addScore(hSelectedDieScores)
@@ -206,16 +241,19 @@ open class GameActivity : AppCompatActivity() {
         scoreButton.setOnClickListener {
             scoreButton.isEnabled = false
             hNotSelectedImageViews = mutableListOf()
-            for(i in 0 until rollCountPerPlayer - cRollNumber) {
-                val iter = cNotSelectedImageViews.listIterator()
-                while (iter.hasNext()) {
-                    val imageView = iter.next()
-                    if (!imageView.isSelected) {
-                        iter.remove()
+
+                for(i in 0 until rollCountPerPlayer - cRollNumber) {
+                    val iter = cNotSelectedImageViews.listIterator()
+                    while (iter.hasNext()) {
+                        val imageView = iter.next()
+                        if (!imageView.isSelected) {
+                            iter.remove()
+                        }
                     }
+                    rollDice(0, cNotSelectedImageViews.size)
                 }
-                rollDice(0, cNotSelectedImageViews.size)
-            }
+
+
             val handler = Handler(Looper.getMainLooper())
             handler.postDelayed({
                 humanPlayer.addScore(hSelectedDieScores)
@@ -240,8 +278,6 @@ open class GameActivity : AppCompatActivity() {
                 } else if (computerPlayer.score >= winningScore && humanPlayer.score < computerPlayer.score) {
                     computerWins += 1
                     tvComputerWins.text = computerWins.toString()
-                    computerPlayer.score = 0
-                    computerScore.text = computerPlayer.score.toString()
                     showWinScreen("You Lose", false)
                 }
             }, delayMillis)
@@ -275,25 +311,25 @@ open class GameActivity : AppCompatActivity() {
             true
         )
 
-        val closeButtonWinScreen = winView.findViewById<Button>(R.id.close_win_screen)
         val winText = winView.findViewById<TextView>(R.id.win_text)
 
         winText.text = text
         if (won) {
             winText.setTextColor(Color.GREEN)
+            storeWins(0, 1)
         } else {
             winText.setTextColor(Color.RED)
+            storeWins(1, 0)
         }
 
-        // Set a click listener for the close button
-        closeButtonWinScreen.setOnClickListener {
+
             // Dismiss the popup window
             humanPlayer.score = 0
             humanScore.text = humanPlayer.score.toString()
             computerPlayer.score = 0
             computerScore.text = computerPlayer.score.toString()
             winWindow.dismiss()
-        }
+
         // Show the popup window
         winWindow.showAtLocation(winView, Gravity.CENTER, 0, 0)
     }
@@ -315,7 +351,11 @@ open class GameActivity : AppCompatActivity() {
                     cNotSelectedImageViews[k].tag = diceImages[computerDice[k]-1]
                 }
                 for (l in 0 until cNotSelectedImageViews.size) {
-                    cNotSelectedImageViews[l].isSelected = computerDice[l] <= 3
+                    if (gameMode == "easy") {
+                        cNotSelectedImageViews[l].isSelected = Random.nextBoolean()
+                    } else {
+                        cNotSelectedImageViews[l].isSelected = computerDice[l] <= 3
+                    }
                 }
                 try {
                     Thread.sleep(delayTime.toLong())
@@ -336,5 +376,17 @@ open class GameActivity : AppCompatActivity() {
             hNotSelectedImageViews = mutableListOf()
         }
         diceAnimationThread.start()
+    }
+
+    //locally store the data in the device
+    private fun storeWins(computerPoint:Int,humanPoint:Int){
+        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            val currentComputerPoint = sharedPref.getInt("COMPUTER-SCORE", 0)
+            val currentHumanPoint = sharedPref.getInt("HUMAN-SCORE", 0)
+            putInt("COMPUTER-SCORE",currentComputerPoint+computerPoint)
+            putInt("HUMAN-SCORE",currentHumanPoint+humanPoint)
+            apply()
+        }
     }
 }

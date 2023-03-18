@@ -11,8 +11,6 @@
         android:id="@+id/win_text"
         android:layout_width="303dp"
         android:layout_height="138dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
         android:paddingTop="40dp"
         android:text="TextView"
         android:textAlignment="center"
@@ -21,14 +19,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/close_win_screen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
-        android:background="@drawable/round_button"
-        android:text="Close"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/win_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>
